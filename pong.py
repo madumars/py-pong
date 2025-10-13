@@ -52,6 +52,8 @@ game_rules = {
     "ball_speed": 5
 }
 
+time.sleep(10)
+
 #Teclas
 #sc.listen()
 #sc.onkeypress(hurdleupA, "w")  
