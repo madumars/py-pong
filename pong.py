@@ -49,7 +49,7 @@ points = {
 }
 game_rules = {
     "win_points": 4,
-    "ball_speed": 5
+    "ball_speed": 2
 }
 
 #Painel pontuação (arrumar estilo depois)
@@ -103,26 +103,49 @@ elif points["p2"] == game_rules["win_points"]:
     game_over = True
     winner = "p2"
 
-#Colisão
+#Colisão hurdle com ball
 if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < hurdle_right.ycor() + 50 and ball.ycor() > hurdle_right.ycor() - 50):
     ball.setx(340)
     ball.dx*= -1
-elif (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < hurdle_left.ycor() + 50 and ball.ycor() > hurdle_left.ycor() - 50):
-    ball.goto(0, 0)
+if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < hurdle_left.ycor() + 50 and ball.ycor() > hurdle_left.ycor() - 50):
+    ball.setx(-340)
     ball.dx *= -1
-    points["p2"] += 1
     
-#Colisão da bola com topo 
-if ball.ycor() > 290:
-    ball.sety(290)
-    ball.dy *= -1
-elif ball.ycor() < -290:
-    ball.sety(-290)
-    ball.dy *= -1
+#Game loop
+while True:
+    sc.update()
+    time.sleep(0.01)
+
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+#verificando bordas
+    if ball.ycor() > 260:
+        ball.sety(260)
+        ball.dy *= -1
+    
+    if ball.ycor() < -260:
+        ball.sety(-260)
+        ball.dy *= -1
+        
+    if ball.xcor() > 500:
+        ball.goto(0, 0)
+        ball.dy *= -1
+        p1 += 1
+        score_display.clear()
+        score_display.write("p1: {}  p2: {}".format(p1,p2), align="center", font=("Arial", 24, "normal"))
+    
+    if ball.xcor() < -500:
+        ball.goto(0, 0)
+        ball.dy *= -1
+        p2 += 1
+        score_display.clear()
+        score_display.write("p1: {}  p2: {}".format(p1,p2), align="center", font=("Arial", 24, "normal"))
+
     
 #atualizar placar
-score_display.clear()
-score_display.write("p1: {}  p2: {}".format(points["p1"], points["p2"]), align="center", font=("Arial", 24, "normal"))
+#score_display.clear()
+#score_display.write("p1: {}  p2: {}".format(points["p1"], points["p2"]), align="center", font=("Arial", 24, "normal"))
 
 
 
