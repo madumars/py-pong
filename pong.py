@@ -13,7 +13,7 @@ sc.setup(width=900, height=500)
 ball = turtle.Turtle()
 ball.shape("circle")
 ball.color("black")
-ball.speed(60)
+ball.speed(30)
 ball.dx = 5
 ball.dy = -5
 ball.penup()
@@ -91,25 +91,6 @@ sc.onkeypress(hurdle_left_up, "w")
 sc.onkeypress(hurdle_left_down, "s") 
 sc.onkeypress(hurdle_right_up, "Up")
 sc.onkeypress(hurdle_right_down, "Down")
-
-#ball.setx(ball.xcor() + ball.dx)
-#ball.sety(ball.ycor() + ball.dy)
-
-#Condições
-if points["p1"] == game_rules["win_points"]:
-    game_over = True
-    winner = "p1"
-elif points["p2"] == game_rules["win_points"]:
-    game_over = True
-    winner = "p2"
-
-#Colisão hurdle com ball
-if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < hurdle_right.ycor() + 50 and ball.ycor() > hurdle_right.ycor() - 50):
-    ball.setx(340)
-    ball.dx*= -1
-if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < hurdle_left.ycor() + 50 and ball.ycor() > hurdle_left.ycor() - 50):
-    ball.setx(-340)
-    ball.dx *= -1
     
 #Game loop
 while True:
@@ -118,14 +99,22 @@ while True:
 
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
+    
+    #if points["p1"] == game_rules["win_points"]:
+       # game_over = True
+       # winner = p1
+    #elif points["p2"] == game_rules["win_points"]:
+       # game_over= True
+        #ss
+        #winner = p2
 
 #verificando bordas
-    if ball.ycor() > 260:
-        ball.sety(260)
+    if ball.ycor() > 280:
+        ball.sety(280)
         ball.dy *= -1
     
-    if ball.ycor() < -260:
-        ball.sety(-260)
+    if ball.ycor() < -280:
+        ball.sety(-280)
         ball.dy *= -1
         
     if ball.xcor() > 500:
@@ -142,18 +131,18 @@ while True:
         score_display.clear()
         score_display.write("p1: {}  p2: {}".format(p1,p2), align="center", font=("Arial", 24, "normal"))
 
+    if (ball.xcor() > 360 and ball.xcor() < 370) and (ball.ycor() < hurdle_right.ycor() + 50 and ball.ycor() > hurdle_right.ycor() - 50):
+        ball.setx(360)
+        ball.dx *= -1
     
-#atualizar placar
-#score_display.clear()
-#score_display.write("p1: {}  p2: {}".format(points["p1"], points["p2"]), align="center", font=("Arial", 24, "normal"))
+    if(ball.xcor() < -360 and ball.xcor() > -370) and (ball.ycor() < hurdle_left.ycor() + 50 and ball.ycor() > hurdle_left.ycor() - 50):
+        ball.setx(-360)
+        ball.dx *= -1
+    
 
-
-
-#Mover a barreira (hurdle)
-
-
-#Apagar depois 
-#time.sleep(10)
+#consertar:
+# apertar o "s" coloca os itens no ponto de partida novamente e não desce e barra
+# o jogo termina após marcar o primeiro ponto em qualquer lado acusando erro pro jogador que perdeu 
 
 #Notas gerais 
 #Fundo - bgcolor("white")
