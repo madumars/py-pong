@@ -1,187 +1,163 @@
-#ping pong em py
-
 import turtle
 import time
 
-#Tela/Screen
-turtle.setup(400, 300)
-turtle.bgcolor("white")
-
-'''
+# Tela/Screen(sc)
 sc = turtle.Screen()
-sc.title("Py pong")
+sc.title("Pong game")
 sc.bgcolor("white")
-sc.setup(400, 300)
-'''
+sc.setup(width=1000, height=600)
 
-#Bola(ball)
+# hurdle left(obstaculo)
+hurdle_left = turtle.Turtle()
+hurdle_left.speed(0)
+hurdle_left.shape("square")
+hurdle_left.color("purple")
+hurdle_left.shapesize(stretch_wid=6, stretch_len=2)
+hurdle_left.penup()
+hurdle_left.goto(-400, 0)
+
+# Right hurdle(obstaculo)
+hurdle_right = turtle.Turtle()
+hurdle_right.speed(0)
+hurdle_right.shape("square")
+hurdle_right.color("green")
+hurdle_right.shapesize(stretch_wid=6, stretch_len=2)
+hurdle_right.penup()
+hurdle_right.goto(400, 0)
+
+# bola (ball)
 ball = turtle.Turtle()
+ball.speed(4)  
 ball.shape("circle")
 ball.color("black")
-#ball.speed(30)
-ball.dx = 5
-ball.dy = -5
 ball.penup()
 ball.goto(0, 0)
+ball.dx = 5
+ball.dy = -5
 
-game_over = False
-winner = None
-points = {
-    "p1": 0,
-    "p2": 0
-}
-game_rules = {
-    "points_win": 3,
-    "ball_speed": 3
-}
+# pontuação
+p1 = 0
+p2 = 0
 
-#Barreiras 
+# pontuação inicial
+sketch = turtle.Turtle()
+sketch.speed(0)
+sketch.color("black")
+sketch.penup()
+sketch.hideturtle()
+sketch.goto(0, 260)
+sketch.write("p1 : 0    p2: 0",
+             align="center", font=("Courier", 24, "normal"))
 
-#Barreira da Esquerda (hurdle_left)
-hurdle_left = turtle.Turtle()
-#hurdle_left.speed(0)
-hurdle_left.shape("square")
-hurdle_left.shapesize(stretch_wid=5, stretch_len=1)
-hurdle_left.penup()
-hurdle_left.goto(-350, 0)
-hurdle_left.dy = 0
-hurdle_left.color("purple")
+# como mover o hurdle
 
-
-#Barreira da Direita (hurdle_right)
-hurdle_right = turtle.Turtle()
-#hurdle_right.speed(0)
-hurdle_right.shape("square")
-hurdle_right.shapesize(stretch_wid=5, stretch_len=1)
-hurdle_right.penup()
-hurdle_right.dy = 0
-hurdle_right.goto(350, 0)
-hurdle_right.color("green")
-
-#Game
-
-
-#Painel pontuação (arrumar estilo depois)
-score_display = turtle.Turtle()
-score_display.color("blue")
-score_display.penup() 
-score_display.hideturtle()
-score_display.goto(0, 200)
-score_display.write("Jogador 1: 0 Jogador 2: 0", align="center", font=("Arial", 20, "normal"))
-
-hurdle_left.sety(hurdle_left.ycor() + hurdle_left.dy)
-hurdle_right.sety(hurdle_right.ycor() + hurdle_right.dy)
-ball.setx(ball.xcor() + ball.dx)
-ball.sety(ball.ycor() + ball.dy)
-
-# Condições para o jogo
-if points["p1"] == game_rules["points_win"]:
-    game_over = True
-    winner = "p1"
-elif points["p2"] == game_rules["points_win"]:
-    game_over = True
-    winner = "p2"
-    
-    
-if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < hurdle_right.ycor() + 50 and ball.ycor() > hurdle_right.ycor() - 50):
-        ball.setx(340)
-        ball.dx *= -1
-    
-if(ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < hurdle_left.ycor() + 50 and ball.ycor() > hurdle_left.ycor() - 50):
-        ball.setx(-340)
-        ball.dx *= -1
-        
-#Não deixar a ball sair da tela
-
-if ball.xcor() > 390:
-    ball.goto(0, 0)
-    ball.dx *= -1
-    points["p1"] += 1
-elif ball.xcor() < -390:
-    ball.goto(0, 0)
-    ball.dx *= -1
-    points["p2"] += 1
-    
-# Colidindo com o topo
-if ball.ycor() > 290:
-    ball.sety(290)
-    ball.dy *= -1
-elif ball.ycor() < -290:
-    ball.sety(-290)
-    ball.dy *= -1
-
-#Testar de arrumar o placar
-score_display.clear()
-score_display.write("p1: {}  p2: {}".format(points["p1"], points["p2"]), align="center", font=("Arial", 24, "normal"))
-
-#movimento da bola
 
 def hurdle_left_up():
-    hurdle_left.dy = 10
-        
+    y = hurdle_left.ycor()
+    if y < 250:  
+        y += 20
+        hurdle_left.sety(y)
+
+
 def hurdle_left_down():
-    hurdle_left.dy = -10
-        
+    y = hurdle_left.ycor()
+    if y > -240:  
+        y -= 20
+        hurdle_left.sety(y)
+
+
 def hurdle_right_up():
-    hurdle_right.dy = 10
-        
+    y = hurdle_right.ycor()
+    if y < 250:  
+        y += 20
+        hurdle_right.sety(y)
+
+
 def hurdle_right_down():
-    hurdle_right.dy = -10
-        
-#Teclas
-turtle.listen()
-turtle.onkeypress(hurdle_left_up, "w")  
-turtle.onkeypress(hurdle_left_down, "s") 
-turtle.onkeypress(hurdle_right_up, "Up")
-turtle.onkeypress(hurdle_right_down, "Down")
+    y = hurdle_right.ycor()
+    if y > -240:  
+        y -= 20
+        hurdle_right.sety(y)
 
-#Tela de game over (precisa melhorar)
-display_game_over = turtle.Turtle()
-display_game_over.color("black")
-display_game_over.penup()
-display_game_over.hideturtle()
-display_game_over.goto(0, 0)
-display_game_over.write("Fim de jogo {} venceu".format(winner), align="center", font=("Arial", 24, "normal"))
-    
-#Game loop
+
+# teclas
+sc.listen()
+sc.onkeypress(hurdle_left_up, "w")  
+sc.onkeypress(hurdle_left_down, "s")  
+sc.onkeypress(hurdle_right_up, "Up")
+sc.onkeypress(hurdle_right_down, "Down")
+
+#game over
+game_over = False
+Winner = None
+game_rules = {
+    "win_points" : 5
+}
+
+#tela de game over
+game_over_display = turtle.Turtle()
+game_over_display.color("black")
+game_over_display.penup()
+game_over_display.hideturtle()
+game_over_display.goto(0, 0)
+game_over_display.write("Fim de jogo {} venceu!!!".format(Winner), align="center", font=("Arial", 24, "normal"))
+
+# game looping
 while True:
-    turtle.update()
-    time.sleep(0.01)
-
+    sc.update()
+    time.sleep(0.01) 
+     
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
-    
-# não funcionou esse código 
-#verificando bordas
-    """
+
+    # confirmar bordas
     if ball.ycor() > 280:
         ball.sety(280)
         ball.dy *= -1
-    
+
     if ball.ycor() < -280:
         ball.sety(-280)
         ball.dy *= -1
-        
+
     if ball.xcor() > 500:
         ball.goto(0, 0)
         ball.dy *= -1
         p1 += 1
-        score_display.clear()
-        score_display.write("p1: {}  p2: {}".format(p1,p2), align="center", font=("Arial", 24, "normal"))
-    
+        sketch.clear()
+        sketch.write("p1 : {}    p2: {}".format(
+            p1, p2), align="center",
+            font=("Courier", 24, "normal"))
+
     if ball.xcor() < -500:
         ball.goto(0, 0)
         ball.dy *= -1
         p2 += 1
-        score_display.clear()
-        score_display.write("p1: {}  p2: {}".format(p1,p2), align="center", font=("Arial", 24, "normal"))
-"""
+        sketch.clear()
+        sketch.write("p1 : {}    p2: {}".format(
+            p1, p2), align="center",
+            font=("Courier", 24, "normal"))
 
+    # colisão no hurdle
+    if (ball.xcor() > 360 and ball.xcor() < 370) and \
+            (ball.ycor() < hurdle_right.ycor() + 50 and ball.ycor() > hurdle_right.ycor() - 50):
+        ball.setx(360)
+        ball.dx *= -1
+
+    if (ball.xcor() < -360 and ball.xcor() > -370) and \
+            (ball.ycor() < hurdle_left.ycor() + 50 and ball.ycor() > hurdle_left.ycor() - 50):
+        ball.setx(-360)
+        ball.dx *= -1
+        
 #consertar:
-# apertar o "s" coloca os itens no ponto de partida novamente e não desce e barra
-# o jogo termina após marcar o primeiro ponto em qualquer lado acusando erro pro jogador que perdeu 
 # arrumar tamanho da tela 
-# pontuação não esta adicionando 
+# arrumar tela de game over
+# arrumar win e dar um ganhador
+
+
+#arrumados
+# pontuação não esta adicionando (ok)
+# o jogo termina após marcar o primeiro ponto em qualquer lado acusando erro pro jogador que perdeu (ok)
+# apertar o "s" coloca os itens no ponto de partida novamente e não desce e barra (ok)
 
 #Notas gerais 
 #Fundo - bgcolor("white")
