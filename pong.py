@@ -145,7 +145,7 @@ display_game_over.write("Fim de jogo {} venceu".format(winner), align="center", 
     
 #Game loop
 while True:
-    sc.update()
+    turtle.update()
     time.sleep(0.01)
 
     ball.setx(ball.xcor() + ball.dx)
