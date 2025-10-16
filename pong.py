@@ -109,7 +109,8 @@ while True:
      
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
-
+    
+    
     # confirmar bordas
     if ball.ycor() > 280:
         ball.sety(280)
