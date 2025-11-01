@@ -6,6 +6,10 @@
   <img width="1120" height="528" alt="python" src="https://github.com/user-attachments/assets/dfba667e-6c01-4d7c-aeae-e6230ddbac97" />
 </p>
 
+<p align = "center">
+  <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
+</p>
+
 <p> 
  Projeto pessoal de Python para executar jogo de ping pong utilizando a biblioteca turtle.
 </p>
